@@ -7,9 +7,19 @@ import (
 )
 
 func main()  {
-    archivo, err := os.Open("./text.txt")
+    ejecucion := readFile()
+    fmt.Println(ejecucion)
+}
+
+func readFile() bool {
+    archivo, err := os.Open("./txt.txt")   
+    defer func ()  {
+      archivo.Close()
+      fmt.Println("Defer")  
+      recover()
+    }()
     if err != nil {
-        fmt.Println("Hubo error")
+        panic(err)
     }
 
     scanner := bufio.NewScanner(archivo)
@@ -19,4 +29,13 @@ func main()  {
 
         fmt.Println(linea)
     }
+
+    if true {
+        return true
+    }
+
+    fmt.Println("Nunca me ejecuto")
+
+    return true
+    
 }
